@@ -33,6 +33,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- elasticsearch 源码需要使用 log4j的实现 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -45,6 +46,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
