@@ -1,7 +1,3 @@
-/*
- * Cai.xin Inc.
- * Copyright (c) 2016-2018 All Rights Reserved.
- */
 package com.yangfang.elasticsearch;
 
 import lombok.extern.slf4j.Slf4j;
