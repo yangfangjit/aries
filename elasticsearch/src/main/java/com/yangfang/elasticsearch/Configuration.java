@@ -15,7 +15,12 @@ import java.net.UnknownHostException;
  * @serial 2018/11/8
  */
 public class Configuration {
+
     public static final Integer DEFAULT_PORT = 9300;
+
+    public static final String DEFAULT_ELASTIC_INDEX = "twitter";
+    public static final String DEFAULT_ELASTIC_TYPE = "_doc";
+    public static final String DEFAULT_ELASTICSEARCH_DOC_ID = "10";
 
     public static InetAddress defaultHost() throws UnknownHostException {
         return InetAddress.getLocalHost();

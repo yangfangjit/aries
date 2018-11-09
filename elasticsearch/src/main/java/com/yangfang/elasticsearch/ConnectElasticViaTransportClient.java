@@ -21,15 +21,17 @@ import java.io.IOException;
  * @serial 2018/11/8
  */
 @Slf4j
-public class ConnectElastic {
+public class ConnectElasticViaTransportClient {
 
     public static void main(String[] args) {
         try (TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
                 .addTransportAddress(new TransportAddress(Configuration.defaultHost(), Configuration.DEFAULT_PORT))) {
             log.info("Elasticsearch node num: {}", client.listedNodes().size());
 
-            IndexResponse response = client.prepareIndex("twitter", "_doc", "10")
-                    .setSource(EntityFactory.getJsonString(), XContentType.JSON).get();
+            IndexResponse response = client.prepareIndex(Configuration.DEFAULT_ELASTIC_INDEX,
+                    Configuration.DEFAULT_ELASTIC_TYPE,
+                    Configuration.DEFAULT_ELASTICSEARCH_DOC_ID
+            ).setSource(EntityFactory.getJsonString(), XContentType.JSON).get();
 
             log.info(response.toString());
         } catch (IOException e) {

@@ -20,6 +20,7 @@
     <properties>
         <guava.version>25.1-jre</guava.version>
         <elasticsearch-java-api.version>6.4.2</elasticsearch-java-api.version>
+        <elasticsearch-rest-high-level-client.version>6.4.3</elasticsearch-rest-high-level-client.version>
         <apache-poi.version>4.0.0</apache-poi.version>
         <fastjson.version>1.2.51</fastjson.version>
         <poi-ooxml.version>3.10-FINAL</poi-ooxml.version>
@@ -40,6 +41,11 @@
                 <version>${guava.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch-rest-high-level-client.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>transport</artifactId>
