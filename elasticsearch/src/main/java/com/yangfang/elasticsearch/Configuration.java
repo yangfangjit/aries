@@ -16,7 +16,10 @@ import java.net.UnknownHostException;
  */
 public class Configuration {
 
-    public static final Integer DEFAULT_PORT = 9300;
+    public static final String DEFAULT_ELASTICSEARCH_REST_HOSTNAME = "localhost";
+    public static final Integer DEFAULT_ELASTICSEARCH_REST_PORT = 9200;
+
+    public static final Integer DEFAULT_ELASTICSEARCH_PORT = 9300;
 
     public static final String DEFAULT_ELASTIC_INDEX = "twitter";
     public static final String DEFAULT_ELASTIC_TYPE = "_doc";

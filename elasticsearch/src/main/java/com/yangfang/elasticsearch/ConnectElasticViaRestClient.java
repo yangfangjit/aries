@@ -5,6 +5,7 @@
 
 package com.yangfang.elasticsearch;
 
+import com.yangfang.elasticsearch.enums.URI;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.index.IndexRequest;
@@ -29,12 +30,16 @@ public class ConnectElasticViaRestClient {
     public static void main(String[] args) {
         try (RestHighLevelClient client = new RestHighLevelClient(
                 RestClient.builder(
-                        new HttpHost("localhost", 9200, "http"),
-                        new HttpHost("localhost", 9201, "http")))) {
+                        new HttpHost(Configuration.DEFAULT_ELASTICSEARCH_REST_HOSTNAME,
+                                Configuration.DEFAULT_ELASTICSEARCH_REST_PORT,
+                                URI.HTTP.getCode())))) {
 
-            IndexRequest request = new IndexRequest(Configuration.DEFAULT_ELASTIC_INDEX, Configuration.DEFAULT_ELASTIC_TYPE, "10")
-                    .source(EntityFactory.getJsonString(), XContentType.JSON);
+            IndexRequest request = new IndexRequest(Configuration.DEFAULT_ELASTIC_INDEX,
+                    Configuration.DEFAULT_ELASTIC_TYPE,
+                    Configuration.DEFAULT_ELASTICSEARCH_DOC_ID
+            ).source(EntityFactory.getJsonString(), XContentType.JSON);
             request.timeout(TimeValue.timeValueSeconds(1));
+
             IndexResponse response = client.index(request, RequestOptions.DEFAULT);
             log.info("{}", response);
         } catch (IOException e) {

@@ -25,7 +25,7 @@ public class ConnectElasticViaTransportClient {
 
     public static void main(String[] args) {
         try (TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new TransportAddress(Configuration.defaultHost(), Configuration.DEFAULT_PORT))) {
+                .addTransportAddress(new TransportAddress(Configuration.defaultHost(), Configuration.DEFAULT_ELASTICSEARCH_PORT))) {
             log.info("Elasticsearch node num: {}", client.listedNodes().size());
 
             IndexResponse response = client.prepareIndex(Configuration.DEFAULT_ELASTIC_INDEX,
