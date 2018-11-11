@@ -1,5 +1,6 @@
 package com.yangfang.elasticsearch;
 
+import com.yangfang.elasticsearch.context.Configuration;
 import com.yangfang.elasticsearch.enums.URI;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;

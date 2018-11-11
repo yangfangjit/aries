@@ -1,4 +1,4 @@
-package com.yangfang.elasticsearch;
+package com.yangfang.elasticsearch.context;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -20,7 +20,7 @@ public class Configuration {
     public static final String DEFAULT_ELASTIC_TYPE = "_doc";
     public static final String DEFAULT_ELASTICSEARCH_DOC_ID = "10";
 
-    public static InetAddress defaultHost() throws UnknownHostException {
+    public static InetAddress getLocalHost() throws UnknownHostException {
         return InetAddress.getLocalHost();
     }
 }

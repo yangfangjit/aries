@@ -1,5 +1,6 @@
 package com.yangfang.elasticsearch;
 
+import com.yangfang.elasticsearch.context.Configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -21,7 +22,7 @@ public class ConnectElasticViaTransportClient {
 
     public static void main(String[] args) {
         try (TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new TransportAddress(Configuration.defaultHost(), Configuration.DEFAULT_ELASTICSEARCH_PORT))) {
+                .addTransportAddress(new TransportAddress(Configuration.getLocalHost(), Configuration.DEFAULT_ELASTICSEARCH_PORT))) {
             log.info("Elasticsearch node num: {}", client.listedNodes().size());
 
             IndexResponse response = client.prepareIndex(Configuration.DEFAULT_ELASTIC_INDEX,
