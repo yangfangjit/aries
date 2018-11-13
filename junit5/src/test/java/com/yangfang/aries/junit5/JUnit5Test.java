@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- *
+ * Junit 5 test case
  *
  * @author 幽明
  * @serial 2018/11/13
