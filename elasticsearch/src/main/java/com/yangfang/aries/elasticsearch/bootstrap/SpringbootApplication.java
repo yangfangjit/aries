@@ -1,4 +1,4 @@
-package com.yangfang.elasticsearch.bootstrap;
+package com.yangfang.aries.elasticsearch.bootstrap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

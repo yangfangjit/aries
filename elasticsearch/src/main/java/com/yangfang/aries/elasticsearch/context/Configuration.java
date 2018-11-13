@@ -1,4 +1,4 @@
-package com.yangfang.elasticsearch.context;
+package com.yangfang.aries.elasticsearch.context;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -19,6 +19,8 @@ public class Configuration {
     public static final String DEFAULT_ELASTIC_INDEX = "twitter";
     public static final String DEFAULT_ELASTIC_TYPE = "_doc";
     public static final String DEFAULT_ELASTICSEARCH_DOC_ID = "10";
+
+    public static final String NOT_EXIST_ELASTIC_INDEX = "something else";
 
     public static InetAddress getLocalHost() throws UnknownHostException {
         return InetAddress.getLocalHost();

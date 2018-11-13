@@ -1,4 +1,4 @@
-package com.yangfang.elasticsearch;
+package com.yangfang.aries.elasticsearch;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

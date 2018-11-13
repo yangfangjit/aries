@@ -1,7 +1,7 @@
-package com.yangfang.elasticsearch;
+package com.yangfang.aries.elasticsearch;
 
-import com.yangfang.elasticsearch.context.Configuration;
-import com.yangfang.elasticsearch.enums.URI;
+import com.yangfang.aries.elasticsearch.context.Configuration;
+import com.yangfang.aries.elasticsearch.enums.URI;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.index.IndexRequest;

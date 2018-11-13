@@ -1,4 +1,4 @@
-package com.yangfang.elasticsearch.enums;
+package com.yangfang.aries.elasticsearch.enums;
 
 import lombok.Getter;
 

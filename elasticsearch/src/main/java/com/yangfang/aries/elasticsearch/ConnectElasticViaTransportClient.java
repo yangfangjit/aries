@@ -1,6 +1,6 @@
-package com.yangfang.elasticsearch;
+package com.yangfang.aries.elasticsearch;
 
-import com.yangfang.elasticsearch.context.Configuration;
+import com.yangfang.aries.elasticsearch.context.Configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;

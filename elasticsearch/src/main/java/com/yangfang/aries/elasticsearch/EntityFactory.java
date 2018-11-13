@@ -1,4 +1,4 @@
-package com.yangfang.elasticsearch;
+package com.yangfang.aries.elasticsearch;
 
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
