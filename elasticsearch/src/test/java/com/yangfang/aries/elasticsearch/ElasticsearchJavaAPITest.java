@@ -1,19 +1,28 @@
 package com.yangfang.aries.elasticsearch;
 
+import com.google.common.collect.Lists;
+import com.jayway.awaitility.Awaitility;
 import com.yangfang.aries.elasticsearch.context.Configuration;
 import com.yangfang.aries.elasticsearch.enums.URI;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
 import org.junit.Assert;
@@ -21,7 +30,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * elasticsearch API test
@@ -33,6 +46,12 @@ import java.util.Objects;
 class ElasticsearchJavaAPITest {
 
     private static final GetRequest GET_REQUEST = new GetRequest(Configuration.DEFAULT_ELASTIC_INDEX,
+            Configuration.DEFAULT_ELASTIC_TYPE, Configuration.DEFAULT_ELASTICSEARCH_DOC_ID);
+
+    private static final DeleteRequest DELETE_REQUEST = new DeleteRequest(Configuration.DEFAULT_ELASTIC_INDEX,
+            Configuration.DEFAULT_ELASTIC_TYPE, Configuration.DEFAULT_ELASTICSEARCH_DOC_ID);
+
+    private static final UpdateRequest UPDATE_REQUEST = new UpdateRequest(Configuration.DEFAULT_ELASTIC_INDEX,
             Configuration.DEFAULT_ELASTIC_TYPE, Configuration.DEFAULT_ELASTICSEARCH_DOC_ID);
 
     @Test
@@ -76,6 +95,7 @@ class ElasticsearchJavaAPITest {
     @Test
     @DisplayName("异步get")
     void testAsynchronousGet() {
+        List<GetResponse> responses = Lists.newArrayListWithCapacity(1);
         try (RestHighLevelClient client = new RestHighLevelClient(
                 RestClient.builder(
                         new HttpHost(Configuration.DEFAULT_ELASTICSEARCH_REST_HOSTNAME,
@@ -85,7 +105,7 @@ class ElasticsearchJavaAPITest {
             ActionListener<GetResponse> listener = new ActionListener<GetResponse>() {
                 @Override
                 public void onResponse(GetResponse getResponse) {
-                    log.info("{}", getResponse);
+                    responses.add(getResponse);
                 }
 
                 @Override
@@ -95,11 +115,13 @@ class ElasticsearchJavaAPITest {
             };
 
             client.getAsync(GET_REQUEST, RequestOptions.DEFAULT, listener);
-            Thread.sleep(5000);
+            // handle wait in asynchronous case
+            Awaitility.await().atMost(5, TimeUnit.MINUTES).until(() -> !responses.isEmpty());
+            if (!responses.isEmpty()) {
+                log.info("{}", responses.get(0));
+            }
         } catch (IOException e) {
             log.warn("Failed to build a RestHighLevelClient, cause:", e);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
@@ -111,12 +133,12 @@ class ElasticsearchJavaAPITest {
 
         GetRequest request = new GetRequest(Configuration.NOT_EXIST_ELASTIC_INDEX,
                 Configuration.DEFAULT_ELASTIC_TYPE, Configuration.DEFAULT_ELASTICSEARCH_DOC_ID);
-        GetResponse response = null;
+        GetResponse response;
         try {
             response = client.get(request, RequestOptions.DEFAULT);
         } catch (ElasticsearchStatusException ese) {
             // returns a rest status
-            RestStatus restStatus = ese.status();
+            // RestStatus restStatus = ese.status();
             log.warn("index[{}] is not exist", Configuration.NOT_EXIST_ELASTIC_INDEX, ese);
             return;
         }
@@ -133,7 +155,7 @@ class ElasticsearchJavaAPITest {
      * 异常中记录的状态即是RestStatus.CONFLICT
      */
     @Test
-    @DisplayName("版本冲突")
+    @DisplayName("get版本冲突")
     void testGetInConflict() throws IOException {
         RestHighLevelClient client = BaseConfiguration.restHighLevelClient();
         Assert.assertNotNull(client);
@@ -173,6 +195,85 @@ class ElasticsearchJavaAPITest {
                 Configuration.DEFAULT_ELASTIC_TYPE, Configuration.DEFAULT_ELASTICSEARCH_DOC_ID);
         exists = client.exists(request, RequestOptions.DEFAULT);
         Assert.assertFalse(exists);
+    }
+
+
+    @Test
+    @DisplayName("同步delete")
+    void testDelete() throws IOException {
+        RestHighLevelClient client = BaseConfiguration.restHighLevelClient();
+        Assert.assertNotNull(client);
+
+        DeleteResponse response = null;
+        try {
+            response = client.delete(DELETE_REQUEST, RequestOptions.DEFAULT);
+        } catch (ElasticsearchStatusException ese) {
+            log.warn("exception occurred when invoke a request", ese);
+        }
+
+        if (Objects.nonNull(response)) {
+            log.info("{}", response);
+        }
+    }
+
+    @Test
+    @DisplayName("同步update")
+    void testUpdate() throws IOException {
+        RestHighLevelClient client = BaseConfiguration.restHighLevelClient();
+        Assert.assertNotNull(client);
+
+        XContentBuilder builder = XContentFactory.jsonBuilder();
+        builder.startObject();
+        {
+            builder.timeField("updated", new Date());
+            builder.field("reason", "daily update");
+        }
+        builder.endObject();
+        UpdateRequest request = new UpdateRequest("posts", "doc", "1")
+                .doc(builder);
+
+        UpdateResponse response = null;
+        try {
+            response = client.update(request, RequestOptions.DEFAULT);
+        } catch (ElasticsearchStatusException ese) {
+            log.warn("exception occurred when invoke a request", ese);
+        }
+
+        if (Objects.nonNull(response)) {
+            log.info("{}", response);
+        }
+    }
+
+    @Test
+    @DisplayName("bulk - multi request")
+    void testBulk() throws IOException {
+        RestHighLevelClient client = BaseConfiguration.restHighLevelClient();
+        Assert.assertNotNull(client);
+
+        XContentBuilder builder = XContentFactory.jsonBuilder();
+        builder.startObject();
+        {
+            builder.timeField("updated", new Date());
+            builder.field("reason", "daily update");
+        }
+        builder.endObject();
+        UpdateRequest updateRequest = new UpdateRequest("posts", "doc", "1")
+                .doc(builder);
+
+        BulkRequest request = new BulkRequest();
+        request.add(updateRequest);
+
+
+        UpdateResponse response = null;
+        try {
+            response = client.update(UPDATE_REQUEST.doc(builder), RequestOptions.DEFAULT);
+        } catch (ElasticsearchStatusException ese) {
+            log.warn("exception occurred when invoke a request", ese);
+        }
+
+        if (Objects.nonNull(response)) {
+            log.info("{}", response);
+        }
     }
 
 }
