@@ -3,7 +3,7 @@
  * Copyright (c) 2016-2018 All Rights Reserved.
  */
 
-package com.yangfang.aries.elasticsearch;
+package com.yangfang.aries.elasticsearch.config;
 
 import com.yangfang.aries.elasticsearch.enums.URI;
 import lombok.extern.slf4j.Slf4j;

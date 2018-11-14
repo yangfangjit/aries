@@ -1,7 +1,9 @@
-package com.yangfang.aries.elasticsearch;
+package com.yangfang.aries.elasticsearch.rest.api.simple;
 
 import com.google.common.collect.Lists;
 import com.jayway.awaitility.Awaitility;
+import com.yangfang.aries.elasticsearch.EntityFactory;
+import com.yangfang.aries.elasticsearch.config.BaseConfiguration;
 import com.yangfang.aries.elasticsearch.context.Configuration;
 import com.yangfang.aries.elasticsearch.enums.URI;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +35,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,7 +44,7 @@ import java.util.concurrent.TimeUnit;
  * @serial 2018/11/13
  */
 @Slf4j
-class ElasticsearchJavaAPITest {
+class ElasticsearchSimpleAPITest {
 
     private static final GetRequest GET_REQUEST = new GetRequest(Configuration.DEFAULT_ELASTIC_INDEX,
             Configuration.DEFAULT_ELASTIC_TYPE, Configuration.DEFAULT_ELASTICSEARCH_DOC_ID);
@@ -102,7 +103,7 @@ class ElasticsearchJavaAPITest {
                                 Configuration.DEFAULT_ELASTICSEARCH_REST_PORT,
                                 URI.HTTP.getCode())))) {
 
-            ActionListener<GetResponse> listener = new ActionListener<GetResponse>() {
+            client.getAsync(GET_REQUEST, RequestOptions.DEFAULT, new ActionListener<GetResponse>() {
                 @Override
                 public void onResponse(GetResponse getResponse) {
                     responses.add(getResponse);
@@ -112,11 +113,15 @@ class ElasticsearchJavaAPITest {
                 public void onFailure(Exception e) {
                     log.warn("Failed to get", e);
                 }
-            };
+            });
 
-            client.getAsync(GET_REQUEST, RequestOptions.DEFAULT, listener);
+            long start = System.currentTimeMillis();
             // handle wait in asynchronous case
             Awaitility.await().atMost(5, TimeUnit.MINUTES).until(() -> !responses.isEmpty());
+            log.info("Asynchronous get costs {}ms", System.currentTimeMillis() - start);
+
+            // Awaitility.await().atMost(5, TimeUnit.MINUTES).
+
             if (!responses.isEmpty()) {
                 log.info("{}", responses.get(0));
             }

@@ -25,4 +25,8 @@ public class Configuration {
     public static InetAddress getLocalHost() throws UnknownHostException {
         return InetAddress.getLocalHost();
     }
+
+    private Configuration() {
+
+    }
 }
