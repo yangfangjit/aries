@@ -38,13 +38,13 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
- * elasticsearch API test
+ * search API test
  *
  * @author 幽明
  * @serial 2018/11/13
  */
 @Slf4j
-class ElasticsearchSimpleAPITest {
+class ElasticsearchCRUDAPITest {
 
     private static final GetRequest GET_REQUEST = new GetRequest(Configuration.DEFAULT_ELASTIC_INDEX,
             Configuration.DEFAULT_ELASTIC_TYPE, Configuration.DEFAULT_ELASTICSEARCH_DOC_ID);
