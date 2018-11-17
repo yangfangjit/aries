@@ -20,6 +20,7 @@
         <module>java-src</module>
         <module>poi</module>
         <module>junit5</module>
+        <module>quartz</module>
     </modules>
 
     <properties>
@@ -27,6 +28,8 @@
         <guava.version>25.1-jre</guava.version>
         <elasticsearch-java-api.version>6.4.2</elasticsearch-java-api.version>
         <elasticsearch-rest-high-level-client.version>6.4.3</elasticsearch-rest-high-level-client.version>
+        <elasticsearch-test-framework.version>6.4.3</elasticsearch-test-framework.version>
+        <lucene-test-framework.version>7.5.0</lucene-test-framework.version>
         <apache-poi.version>4.0.0</apache-poi.version>
         <fastjson.version>1.2.51</fastjson.version>
         <poi-ooxml.version>3.10-FINAL</poi-ooxml.version>
@@ -47,6 +50,9 @@
         <junit-vintage.version>5.3.1</junit-vintage.version>
 
         <awaitility.version>1.7.0</awaitility.version>
+
+        <quartz.version>2.3.0</quartz.version>
+
     </properties>
 
     <dependencyManagement>
@@ -87,6 +93,19 @@
                         <artifactId>slf4j-simple</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-test-framework</artifactId>
+                <version>${lucene-test-framework.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.test</groupId>
+                <artifactId>framework</artifactId>
+                <version>${elasticsearch-test-framework.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -178,6 +197,11 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
