@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.concurrent.Executor;
 
 /**
- * 定时任务分发器
+ * timer task manager
  *
  * @author 幽明
  * @serial 2018/11/16
@@ -16,7 +16,7 @@ public class TimerTaskManager {
 
     /**
      * 任务池数据结构选择
-     * 1、队列，common选择
+     * 1、queue，common选择
      *
      * 2、map，便于取消与更新定时任务
      */
@@ -25,11 +25,11 @@ public class TimerTaskManager {
     private Executor executor;
 
     /**
-     * scan the task pool, find executable tasks and executed
+     * scanAndExecute the task pool, find tasks reached setting time and execute them
      *
-     * @return num of executed task
+     * @return number of executed task
      */
-    public int scan() {
+    public int scanAndExecute() {
         if (taskPool.isEmpty()) {
             return 0;
         }
@@ -54,7 +54,8 @@ public class TimerTaskManager {
         }
 
         if (task.getTimestamp().getTime() < System.currentTimeMillis()) {
-
+            executor.execute(task);
+            return true;
         }
 
         return Objects.isNull(taskPool.put(task.getKey(), task));
