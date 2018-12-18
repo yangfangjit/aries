@@ -17,8 +17,10 @@
 package com.yangfang.aries.dubbo.provider.boot;
 
 import com.alibaba.dubbo.config.spring.context.annotation.DubboComponentScan;
+import com.yangfang.aries.dubbo.provider.config.DubboConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * TODO 类描述
@@ -27,11 +29,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @serial 2018/12/18
  */
 @SpringBootApplication
+@ComponentScan(basePackageClasses = DubboConfiguration.class)
 @DubboComponentScan(basePackages = "com.yangfang.aries.dubbo.provider.service.impl")
 public class DubboProviderApp {
 
     public static void main(String[] args) {
-        new SpringApplication(DubboProviderApp.class).run();
+        SpringApplication.run(DubboProviderApp.class, args);
     }
 
 }

@@ -18,6 +18,7 @@ package com.yangfang.aries.dubbo.provider.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.yangfang.aires.dubbo.provider.service.api.AnnotateService;
+import org.springframework.stereotype.Component;
 
 /**
  * TODO 类描述
@@ -25,7 +26,8 @@ import com.yangfang.aires.dubbo.provider.service.api.AnnotateService;
  * @author 幽明
  * @serial 2018/12/18
  */
-@Service(timeout = 1000)
+@Service(interfaceClass = AnnotateService.class, timeout = 1000)
+@Component
 public class AnnotateServiceImpl implements AnnotateService {
 
     @Override

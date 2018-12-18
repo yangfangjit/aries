@@ -27,10 +27,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @serial 2018/12/18
  */
 @SpringBootApplication
-@DubboComponentScan(basePackages = "com.yangfang.aries.dubbo.provider.service")
+@DubboComponentScan(basePackages = "com.yangfang.aires.dubbo.provider.service.api")
 public class DubboConsumerApp {
 
     public static void main(String[] args) {
-        new SpringApplication(DubboConsumerApp.class).run();
+        SpringApplication.run(DubboConsumerApp.class, args);
     }
 }
