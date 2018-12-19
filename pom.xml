@@ -69,6 +69,8 @@
         <curator-framework.version>4.0.1</curator-framework.version>
 
         <dubbo-spring-context-support.version>1.0.2</dubbo-spring-context-support.version>
+        <hessian.version>4.0.51</hessian.version>
+        <jetty.version>9.4.14.v20181114</jetty.version>
     </properties>
 
     <dependencyManagement>
@@ -295,6 +297,18 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
                 <version>${curator-framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.caucho</groupId>
+                <artifactId>hessian</artifactId>
+                <version>${hessian.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-server</artifactId>
+                <version>${jetty.version}</version>
             </dependency>
 
         </dependencies>

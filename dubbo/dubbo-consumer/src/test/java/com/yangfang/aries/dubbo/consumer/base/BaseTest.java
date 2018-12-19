@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package com.yangfang.aries.dubbo.provider.boot;
+package com.yangfang.aries.dubbo.consumer.base;
 
-import com.alibaba.dubbo.config.spring.context.annotation.DubboComponentScan;
-import com.yangfang.aries.dubbo.provider.config.DubboConfiguration;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.yangfang.aries.dubbo.consumer.config.DubboConfiguration;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * TODO 类描述
  *
  * @author 幽明
- * @serial 2018/12/18
+ * @serial 2018/12/19
  */
-@SpringBootApplication()
-@ComponentScan(basePackageClasses = DubboConfiguration.class)
-@DubboComponentScan(basePackages = "com.yangfang.aries.dubbo.provider.service.impl")
-public class DubboProviderApp {
-
-    public static void main(String[] args) {
-        SpringApplication.run(DubboProviderApp.class, args);
-    }
-
+@RunWith(SpringRunner.class)
+@ComponentScan(basePackages = "com.yangfang.aries.dubbo.consumer")
+@SpringBootTest(classes = BaseTest.class)
+@Import(DubboConfiguration.class)
+public class BaseTest {
 }

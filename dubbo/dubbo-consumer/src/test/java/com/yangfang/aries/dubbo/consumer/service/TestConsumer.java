@@ -18,32 +18,28 @@ package com.yangfang.aries.dubbo.consumer.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.yangfang.aires.dubbo.provider.service.api.AnnotateService;
+import com.yangfang.aries.dubbo.consumer.base.BaseTest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * TODO 类描述
  *
  * @author 幽明
- * @serial 2018/12/18
+ * @serial 2018/12/19
  */
 @Slf4j
-@Component
-public class ConsumerTest implements ApplicationListener {
-
-    private static volatile boolean receivedEvent = false;
+public class TestConsumer extends BaseTest {
 
     @Reference
     private AnnotateService annotateService;
 
-    public void onApplicationEvent(ApplicationEvent event) {
-        if (receivedEvent) {
-            return;
-        }
-
-        receivedEvent = true;
+    @Test
+    public void TestConsumeAnnotateService() {
         log.info("call annotateService.helloDubbo() {}", annotateService.helloDubbo());
+        Assert.assertEquals("Hello Dubbo", annotateService.helloDubbo());
     }
 }
+
+
