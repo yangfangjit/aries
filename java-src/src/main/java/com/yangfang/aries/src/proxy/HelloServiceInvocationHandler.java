@@ -35,22 +35,21 @@ public class HelloServiceInvocationHandler implements InvocationHandler {
     }
 
     public static void main(String[] args) {
-        InvocationHandler englishIH = new HelloServiceInvocationHandler(new HelloServiceImpl());
-        InvocationHandler chineseIH = new HelloServiceInvocationHandler(new ChineseHelloServiceImpl());
+        InvocationHandler englishHandler = new HelloServiceInvocationHandler(new HelloServiceImpl());
+        InvocationHandler chineseHandler = new HelloServiceInvocationHandler(new ChineseHelloServiceImpl());
 
         HelloService english = (HelloService) Proxy.newProxyInstance(
-                englishIH.getClass().getClassLoader(),
-                HelloServiceImpl.class.getInterfaces(),
-                englishIH);
-        log.info("proxy is {}", english.getClass().getName());
+                HelloService.class.getClassLoader(),
+                new Class[]{HelloService.class},
+                englishHandler);
+
         english.sayHello();
 
         HelloService chinese = (HelloService) Proxy.newProxyInstance(
-                chineseIH.getClass().getClassLoader(),
-                ChineseHelloServiceImpl.class.getInterfaces(),
-                chineseIH);
+                HelloService.class.getClassLoader(),
+                new Class[]{HelloService.class},
+                chineseHandler);
 
-        log.info("proxy is {}", english.getClass().getName());
         chinese.sayHello();
     }
 
