@@ -54,7 +54,7 @@
 
         <awaitility.version>1.7.0</awaitility.version>
 
-        <quartz.version>2.3.0</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
 
         <redisson.version>3.9.1</redisson.version>
 
