@@ -24,10 +24,14 @@
         <module>redisson</module>
         <module>rocketmq</module>
         <module>dubbo</module>
+        <module>jsr303</module>
+        <module>pinyin4j</module>
+        <module>common</module>
+        <module>spring</module>
     </modules>
 
     <properties>
-        <springboot.version>2.1.0.RELEASE</springboot.version>
+        <springboot.version>2.2.2.RELEASE</springboot.version>
         <guava.version>25.1-jre</guava.version>
         <elasticsearch-java-api.version>6.4.2</elasticsearch-java-api.version>
         <elasticsearch-rest-high-level-client.version>6.4.3</elasticsearch-rest-high-level-client.version>
@@ -71,6 +75,13 @@
         <dubbo-spring-context-support.version>1.0.2</dubbo-spring-context-support.version>
         <hessian.version>4.0.51</hessian.version>
         <jetty.version>9.4.14.v20181114</jetty.version>
+
+        <hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
+
+        <javax.el.version>3.0.1-b09</javax.el.version>
+
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+
     </properties>
 
     <dependencyManagement>
@@ -309,6 +320,23 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
                 <version>${jetty.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${javax.el.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>${pinyin4j.version}</version>
             </dependency>
 
         </dependencies>

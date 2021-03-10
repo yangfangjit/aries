@@ -33,13 +33,9 @@ public class HelloServiceMethodInterceptor implements MethodInterceptor {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(HelloServiceImpl.class);
         enhancer.setCallback(new HelloServiceMethodInterceptor());
-        HelloService english = (HelloService) enhancer.create();
+        HelloServiceImpl english = (HelloServiceImpl) enhancer.create();
         log.info("proxy is {}", english.getClass().getName());
         english.sayHello();
-
-        enhancer.setSuperclass(ChineseHelloServiceImpl.class);
-        HelloService chinese = (HelloService) enhancer.create();
-        log.info("proxy is {}", chinese.getClass().getName());
-        chinese.sayHello();
     }
+
 }

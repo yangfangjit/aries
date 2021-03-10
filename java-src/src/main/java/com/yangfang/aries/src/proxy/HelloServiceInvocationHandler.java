@@ -34,23 +34,28 @@ public class HelloServiceInvocationHandler implements InvocationHandler {
         return null;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         InvocationHandler englishHandler = new HelloServiceInvocationHandler(new HelloServiceImpl());
         InvocationHandler chineseHandler = new HelloServiceInvocationHandler(new ChineseHelloServiceImpl());
 
-        HelloService english = (HelloService) Proxy.newProxyInstance(
-                HelloService.class.getClassLoader(),
-                new Class[]{HelloService.class},
-                englishHandler);
+        while (true) {
+            Thread.sleep(1000 * 60);
+            HelloService english = (HelloService) Proxy.newProxyInstance(
+                    HelloService.class.getClassLoader(),
+                    new Class[]{HelloService.class},
+                    englishHandler);
 
-        english.sayHello();
+            english.sayHello();
 
-        HelloService chinese = (HelloService) Proxy.newProxyInstance(
-                HelloService.class.getClassLoader(),
-                new Class[]{HelloService.class},
-                chineseHandler);
+            HelloService chinese = (HelloService) Proxy.newProxyInstance(
+                    HelloService.class.getClassLoader(),
+                    new Class[]{HelloService.class},
+                    chineseHandler);
 
-        chinese.sayHello();
+            chinese.sayHello();
+        }
+
+
     }
 
 }
