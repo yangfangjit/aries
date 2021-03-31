@@ -32,7 +32,7 @@
 
     <properties>
         <springboot.version>2.2.2.RELEASE</springboot.version>
-        <guava.version>25.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <elasticsearch-java-api.version>6.4.2</elasticsearch-java-api.version>
         <elasticsearch-rest-high-level-client.version>6.4.3</elasticsearch-rest-high-level-client.version>
         <elasticsearch-test-framework.version>6.4.3</elasticsearch-test-framework.version>
