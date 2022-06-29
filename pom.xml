@@ -37,7 +37,7 @@
         <elasticsearch-rest-high-level-client.version>6.4.3</elasticsearch-rest-high-level-client.version>
         <elasticsearch-test-framework.version>6.4.3</elasticsearch-test-framework.version>
         <lucene-test-framework.version>7.5.0</lucene-test-framework.version>
-        <apache-poi.version>4.0.0</apache-poi.version>
+        <apache-poi.version>4.1.1</apache-poi.version>
         <fastjson.version>1.2.51</fastjson.version>
         <poi-ooxml.version>3.10-FINAL</poi-ooxml.version>
         <lombok.version>1.18.4</lombok.version>
